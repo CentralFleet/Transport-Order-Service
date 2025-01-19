@@ -169,7 +169,12 @@ class TransportOrders:
                 ]
                 for field in updatable_fields:
                     if field in body and body[field] is not None:
-                        setattr(query, field, body[field])
+                        value = body[field]
+                        if value == '':
+                            # If the value is an empty string, set it to None (SQL NULL)
+                            setattr(query, field, None)
+                        else:
+                            setattr(query, field, value)
                 session.commit()
                 return {"status": "success", "message": "Record updated successfully"}
         except Exception as e:
