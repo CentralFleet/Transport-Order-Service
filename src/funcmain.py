@@ -144,6 +144,7 @@ class TransportOrders:
 
                 slack_msg = f"""🚚 *New Transport Request* \n - Order ID: `{order_obj.OrderID}` \n - Vehicles: `{len(vehicles)}` \n - Pickup: `{order_obj.PickupLocation}` \n - Drop-off: `{order_obj.DropoffLocation}` \n <https://crm.zohocloud.ca/crm/org110000402423/tab/Potentials/{deal_id}|View Order Details>"""
                 send_message_to_channel(os.getenv("BOT_TOKEN"), os.getenv("TRANSPORT_CHANNEL_ID"), slack_msg)
+                
                 return {
                 "status": "success",
                 "code": 201,
