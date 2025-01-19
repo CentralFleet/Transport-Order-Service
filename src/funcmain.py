@@ -171,7 +171,6 @@ class TransportOrders:
                     if field in body and body[field] is not None:
                         value = body[field]
                         if value == '':
-                            # If the value is an empty string, set it to None (SQL NULL)
                             setattr(query, field, None)
                         else:
                             setattr(query, field, value)
