@@ -102,16 +102,16 @@ class TransportOrders:
             logger.error(f"Error creating vehicles in Zoho: {e}")
             return None
 
-    def attach_files(self, deal_id, release_forms, token):
-        try:
-            for release_form in release_forms:
-                local_file_path = os.path.join(TEMP_DIR, os.path.basename(release_form))
-                download_file(release_form, local_file_path)
+    def attach_files(self, deal_id, file_urls, token):
+        for url in file_urls:
+            try:
+                local_file_path = os.path.join(TEMP_DIR, os.path.basename(url))
+                download_file(url, local_file_path)
                 response = ZOHO_API.attach_file(moduleName="Deals", record_id=deal_id, file_path=local_file_path, token=token)
                 logger.info(f"File attached response: {response.json()}")
                 os.remove(local_file_path)
-        except Exception as e:
-            logger.error(f"Error attaching files: {e}")
+            except Exception as e:
+                logger.warning(f"Error attaching files in Zoho: {e}")
 
     async def _create_order(self, body: json) -> dict:
         try:
@@ -136,8 +136,11 @@ class TransportOrders:
                     vehicles[i]["Vehicle_ID"] = v_resp["details"]["id"]
                     del vehicles[i]["Layout"]
                     del vehicles[i]["Source"]
-                    response = ZOHO_API.attach_file(moduleName="Vehicles", record_id=v_resp["details"]["id"], file_url=manage_prv(vehicles[i]["ReleaseForm"]), token=token)
-                    logger.info(f"File attached response: {response.json()}")
+                    try:
+                        response = ZOHO_API.attach_file(moduleName="Vehicles", record_id=v_resp["details"]["id"], file_url=manage_prv(vehicles[i]["ReleaseForm"]), token=token)
+                        logger.info(f"File attached response: {response.json()}")
+                    except Exception as e:
+                        logger.warning(f"Error attaching files in Vehicles: {e}")
                 order_obj.TransportRequestID = deal_id
                 session.commit()
                 logger.info("Order successfully created and committed to DB")
