@@ -68,6 +68,8 @@ class TransportOrders:
                 PickupLocation=body.get("Pickup_Location", ""),
                 special_instructon=body.get("Special_Instruction", ""),
                 Tax_Province=extract_tax_province(body.get("Pickup_Location", "")),
+                Pickup_City = body.get("Pickup_City", ""),
+                Dropoff_City= body.get("Dropoff_City", ""),
             )
             response = ZOHO_API.create_record(moduleName="Deals", data={"data": [order_data.dict()]}, token=token)
             deal_id = response.json()['data'][0]['details']['id']

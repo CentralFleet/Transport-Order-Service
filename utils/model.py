@@ -16,3 +16,5 @@ class Order(BaseModel):
     Orders: Optional[List] = None
     special_instructon: Optional[str] = None
     Tax_Province: Optional[str] = None
+    Pickup_City: Optional[str] = None
+    Dropoff_City: Optional[str] = None
