@@ -42,6 +42,7 @@ The Transport Orders Service is a scalable solution built using **Serverless App
   "Pickup_City": "Vancouver",
   "Dropoff_City": "Toronto",
   "Pickup_Province":"British Columbia",
+  "Dropoff_Province":"Ontario",
   "Vehicles": [
     {
       "Make": "Toyota",
