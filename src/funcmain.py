@@ -67,7 +67,7 @@ class TransportOrders:
                 Drop_off_Location=body.get("Dropoff_Location", ""),
                 PickupLocation=body.get("Pickup_Location", ""),
                 special_instructon=body.get("Special_Instruction", ""),
-                Tax_Province=extract_tax_province(body.get("Pickup_Location", "")),
+                Tax_Province=body.get("Pickup_Province", ""),
                 Pickup_City = body.get("Pickup_City", ""),
                 Dropoff_City= body.get("Dropoff_City", ""),
             )
