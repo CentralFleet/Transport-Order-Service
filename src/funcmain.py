@@ -120,7 +120,7 @@ class TransportOrders:
         try:
             token = TOKEN_INSTANCE.get_access_token()
             vehicles = body.get("Vehicles", [])
-            release_forms = self.parse_release_forms(vehicles)
+            # release_forms = self.parse_release_forms(vehicles)
             
             with DatabaseConnection(connection_string=os.getenv("SQL_CONN_STR")) as session:
                 session.begin()
@@ -132,18 +132,14 @@ class TransportOrders:
                 if not deal_id:
                     session.rollback()
                     return {"error": "Zoho order creation failed", "message": "Error creating order", "code": 500}
-                
-                self.attach_files(deal_id, release_forms, token)
+
+                try:
+                    release_forms = body.get("ReleaseForms").split(",")
+                    self.attach_files(deal_id, release_forms, token)
+                except Exception as e:
+                    logger.warning(f"Error attaching files in Zoho: {e}")
                 vehicle_response = self.create_vehicles_in_zoho(vehicles, deal_id, token,order_obj)
-                for i, v_resp in enumerate(vehicle_response["data"]):
-                    vehicles[i]["Vehicle_ID"] = v_resp["details"]["id"]
-                    del vehicles[i]["Layout"]
-                    del vehicles[i]["Source"]
-                    try:
-                        response = ZOHO_API.attach_file(moduleName="Vehicles", record_id=v_resp["details"]["id"], file_url=manage_prv(vehicles[i]["ReleaseForm"]), token=token)
-                        logger.info(f"File attached response: {response.json()}")
-                    except Exception as e:
-                        logger.warning(f"Error attaching files in Vehicles: {e}")
+                logger.info(f"Vehicle batch response: {vehicle_response}")
                 order_obj.TransportRequestID = deal_id
                 session.commit()
                 logger.info("Order successfully created and committed to DB")
