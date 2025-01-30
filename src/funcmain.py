@@ -167,7 +167,7 @@ class TransportOrders:
                     return {"status": "error", "message": "Record not found"}
                 
                 updatable_fields = [
-                    "Status", "EstimatedDropoffTime", "EstimatedPickupTime", "CarrierID", "CarrierName", "CustomerPrice", "CarrierCost", "ActualDeliveryTime", "ActualPickupTime"
+                    "Status", "EstimatedDropoffTime", "EstimatedPickupTime", "CarrierID", "CarrierName", "JobPrice", "CarrierCost", "ActualDeliveryTime", "ActualPickupTime"
                 ]
                 for field in updatable_fields:
                     if field in body and body[field] is not None:
