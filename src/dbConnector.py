@@ -72,3 +72,7 @@ class OrdersDB(Base):
     ActualDeliveryTime = Column(DateTime, nullable=True)
     CarrierName = Column(String(255), nullable=True)
     CarrierID = Column(String(255), nullable=True)
+    DearlerAtPickup = Column(String(255), nullable=True)
+    DearlerAtDropoff = Column(String(255), nullable=True)
+    ContactDropoff	= Column(String(255), nullable=True)
+    ContactPickup = Column(String(255), nullable=True)

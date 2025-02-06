@@ -43,6 +43,10 @@ The Transport Orders Service is a scalable solution built using **Serverless App
   "Dropoff_City": "Toronto",
   "Pickup_Province":"British Columbia",
   "Dropoff_Province":"Ontario",
+  "DealerAtDropoff": "Dealer A",
+  "DealerAtPickup": "Dealer B",
+  "ContactDropoff": "+123-454-4535",
+  "ContactPickup": "+123-454-4535",
   "Vehicles": [
     {
       "Make": "Toyota",

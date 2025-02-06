@@ -47,7 +47,12 @@ class TransportOrders:
                 CustomerName=body.get("Customer_name", ""),
                 DropoffLocation=body.get("Dropoff_Location", ""),
                 PickupLocation=body.get("Pickup_Location", ""),
-                Status="Pending"
+                Status="Pending",
+                DearlerAtPickup = body.get("DealerAtPickup", ""),
+                DearlerAtDropoff = body.get("DealerAtDropoff", ""),
+                ContactDropoff = body.get("ContactDropoff", ""),
+                ContactPickup = body.get("ContactPickup", ""),
+
             )
             session.add(order_obj)
             session.flush()  # Fetch the generated OrderID
@@ -71,6 +76,11 @@ class TransportOrders:
                 Dropoff_Province=body.get("Dropoff_Province", "").replace("é", "e"),
                 Pickup_City = body.get("Pickup_City", ""),
                 Dropoff_City= body.get("Dropoff_City", ""),
+                DealerAtDropoff=body.get("DealerAtDropoff", ""),
+                DealerAtPickup=body.get("DealerAtPickup", ""),
+                ContactDropoff=body.get("ContactDropoff", ""),
+                ContactPickup=body.get("ContactPickup", ""),
+                
             )
             response = ZOHO_API.create_record(moduleName="Deals", data={"data": [order_data.dict()]}, token=token)
             deal_id = response.json()['data'][0]['details']['id']
