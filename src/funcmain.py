@@ -15,7 +15,7 @@ logger = get_logger(__name__)
 
 
 TEMP_DIR = "/tmp"
-
+FILE_PREFIX = "RF-"
 TOKEN_INSTANCE =  TokenManager(
                                 domain_name="Canada",
                                 refresh_token=os.getenv("REFRESH_TOKEN"),
@@ -118,7 +118,10 @@ class TransportOrders:
     def attach_files(self, deal_id, file_urls, token):
         for url in file_urls:
             try:
-                local_file_path = os.path.join(TEMP_DIR, os.path.basename(url))
+                
+                original_filename = os.path.basename(url)
+                prefixed_filename = FILE_PREFIX + original_filename  # Add the prefix
+                local_file_path = os.path.join(TEMP_DIR, prefixed_filename)
                 download_file(url, local_file_path)
                 response = ZOHO_API.attach_file(moduleName="Deals", record_id=deal_id, file_path=local_file_path, token=token)
                 logger.info(f"File attached response: {response.json()}")
