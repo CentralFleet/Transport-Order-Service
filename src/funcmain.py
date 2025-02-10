@@ -107,9 +107,14 @@ class TransportOrders:
                     vehicle['Deal_ID'] = deal_id
                     vehicle['Pickup_Location'] = order_obj.PickupLocation
                     vehicle['Dropoff_Location'] = order_obj.DropoffLocation
-            logger.info(vehicles)
+            logger.info(f"Vehicles: {vehicles}")
             response = ZOHO_API.create_record(moduleName="Vehicles", data={"data": vehicles}, token=token)
-            logger.info(response.json())
+
+            logger.info(f"Batch Vehicle response: {response.json()}")
+            if response.json().get("data"):
+                for vehicle, record in zip(vehicles, response.json()["data"]):
+                    vehicle["Vehicle_Record_ID"] = record.get("details", {}).get("id")  
+
             return response.json()
         except Exception as e:
             logger.error(f"Error creating vehicles in Zoho: {e}")
