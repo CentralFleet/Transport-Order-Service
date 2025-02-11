@@ -206,7 +206,10 @@ class TransportOrders:
             body_filtered = body.copy()  # Ensure we don't modify the original data
             body_filtered.pop("DealID", None)  # Remove DealID if it exists
             
-            return ZohoApi.update_record(moduleName="Deals", id=body.get("DealID", ""), data=body_filtered, token=token)
+            update_response =  ZOHO_API.update_record(moduleName="Deals", id=body.get("DealID", ""), data=body_filtered, token=token)
+
+            return {"status": update_response.status_code, "message": update_response.json()}
+        
         except Exception as e:
             logger.error(f"Error updating order in Zoho: {e}")
             return {"error": str(e)}
