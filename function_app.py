@@ -25,7 +25,10 @@ async def order(req: func.HttpRequest) -> func.HttpResponse:
         try:
             response = await Orderhandler._create_order(body)
             logger.info(f"Func app :{response}")
-            return func.HttpResponse(json.dumps(response), status_code=200)
+            if response['code'] == 201:
+                return func.HttpResponse(json.dumps(response), status_code=201)
+            else:
+                return func.HttpResponse(json.dumps(response), status_code=500)
 
         except Exception as e:
             logger.error(f"Error processing request: {str(e)}")
@@ -34,8 +37,10 @@ async def order(req: func.HttpRequest) -> func.HttpResponse:
     elif req.params.get("action") == "update":
         try:
             response = await Orderhandler._update_order(body)
-
-            return func.HttpResponse(json.dumps(response), status_code=200)
+            if response['code'] == 200:
+                return func.HttpResponse(json.dumps(response), status_code=200)
+            else:
+                return func.HttpResponse(json.dumps(response), status_code=500)
 
         except Exception as e:
             logger.error(f"Error processing request: {str(e)}")
