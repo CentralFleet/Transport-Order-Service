@@ -18,7 +18,7 @@ class Order(BaseModel):
     Tax_Province: Optional[str] = None
     Pickup_City: Optional[str] = None
     Dropoff_City: Optional[str] = None
-    Dropoff_Province: Optional[str] = None
+    Pickup_Province	: Optional[str] = None
     DealerAtDropoff: Optional[str] = None
     DealerAtPickup: Optional[str] = None
     ContactPickup: Optional[str] = None
