@@ -9,7 +9,7 @@ class Order(BaseModel):
     Drop_off_Location: Optional[str] = None
     PickupLocation: Optional[str] = None
     Stage: Optional[str] = Field(default="Shop for Quotes")
-    Order_Status: Optional[str] = Field(default="Quote Requested")
+    Order_Status: Optional[str] = Field(default="Quote Pending")
     Carrier_Payment_Status: Optional[str] = Field(default="Unpaid")
     Customer_Payment_Status: Optional[str] = Field(default="Unpaid")
     Name: Optional[str] = None
