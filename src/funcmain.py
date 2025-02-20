@@ -80,8 +80,8 @@ class TransportOrders:
                 DealerAtPickup=body.get("DealerAtPickup", ""),
                 ContactDropoff=body.get("ContactDropoff", ""),
                 ContactPickup=body.get("ContactPickup", ""),
-                
             )
+            
             response = ZOHO_API.create_record(moduleName="Deals", data={"data": [order_data.dict()]}, token=token)
             deal_id = response.json()['data'][0]['details']['id']
             logger.info(f"Zoho Order created with ID: {deal_id}")
